@@ -1,7 +1,7 @@
 import { saveLocale, type Locale } from '../lib/i18n';
 import { localePath } from '../lib/paths';
 import { translatedPath } from '../lib/routes';
-import { usePage, repository } from '../lib/page';
+import { usePage, repository, createStoreGuideUrl } from '../lib/page';
 import { Brand } from './Brand';
 import { Icon } from './Icon';
 
@@ -20,7 +20,7 @@ export function Header() {
 						href={href(localePath(locale))}>
 						{t('directory')}
 					</a>
-					<a classList={{ active: route.kind === 'guide' }} href={href(localePath(locale, 'guides/create-app-store/'))}>
+					<a href={createStoreGuideUrl} target="_blank" rel="noopener noreferrer">
 						{t('guide')}
 					</a>
 				</nav>
@@ -39,10 +39,10 @@ export function Header() {
 						<span>{locale === 'en' ? '中文' : 'EN'}</span>
 					</a>
 					<span class="header-divider" />
-					<a class="github-link" href={repository} aria-label="GitHub">
+					<a class="github-link" href={repository} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
 						<Icon name="github" />
 					</a>
-					<a class="platform-link" href="https://www.zimaspace.com/zimaos" title={t('recommendedPlatform')}>
+					<a class="platform-link" href="https://www.zimaspace.com/zimaos" target="_blank" rel="noopener noreferrer" title={t('recommendedPlatform')}>
 						{t('zimaos')}
 						<Icon name="external" />
 					</a>
@@ -53,7 +53,7 @@ export function Header() {
 }
 
 export function Footer() {
-	const { locale, href, t } = usePage();
+	const { t } = usePage();
 	return (
 		<footer class="site-footer">
 			<div class="container">
@@ -63,16 +63,15 @@ export function Footer() {
 						<p>{t('footerDescription')}</p>
 					</div>
 					<div class="footer-links">
-						<a href="https://www.zimaspace.com/zimaos" title={t('recommendedPlatform')}>
+						<a href="https://www.zimaspace.com/zimaos" target="_blank" rel="noopener noreferrer" title={t('recommendedPlatform')}>
 							{t('zimaos')}
 							<Icon name="external" />
 						</a>
-						<a href="https://casaos.io/">
+						<a href="https://casaos.io/" target="_blank" rel="noopener noreferrer">
 							{t('casaos')}
 							<Icon name="external" />
 						</a>
-						<a href={href(localePath(locale, 'guides/create-app-store/'))}>{t('guide')}</a>
-						<a href={repository}>
+						<a href={repository} target="_blank" rel="noopener noreferrer">
 							GitHub
 							<Icon name="external" />
 						</a>

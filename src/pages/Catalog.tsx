@@ -4,9 +4,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Input } from '@/components/ui/input';
 import { categories } from '../data/stores';
+import { platforms, platformNames } from '../data/platforms';
 import { filterStores, parseQuery, serializeQuery, type CatalogQuery } from '../lib/catalog';
-import { localePath } from '../lib/paths';
-import { usePage } from '../lib/page';
+import { usePage, createStoreGuideUrl } from '../lib/page';
 import { Icon } from '../components/Icon';
 import { BrandArtwork } from '../components/Brand';
 import { StoreCard } from '../components/StoreCard';
@@ -16,7 +16,7 @@ type CatalogLayout = 'cards' | 'list';
 const layoutStorageKey = 'awesome-casaos.catalog-layout';
 
 function Hero() {
-	const { locale, href, t } = usePage();
+	const { t } = usePage();
 	return (
 		<section class="hero">
 			<div class="container hero-inner">
@@ -33,7 +33,7 @@ function Hero() {
 							{t('explore')}
 							<Icon name="arrow" />
 						</a>
-						<a class="text-link" href={href(localePath(locale, 'guides/create-app-store/'))}>
+						<a class="text-link" href={createStoreGuideUrl} target="_blank" rel="noopener noreferrer">
 							{t('heroGuide')}
 							<Icon name="arrow" />
 						</a>
@@ -100,7 +100,8 @@ export function Catalog() {
 	const [interactive, setInteractive] = createSignal(false);
 	const [layout, setLayout] = createSignal<CatalogLayout>('cards');
 	const visible = createMemo(() => filterStores(stores, query()));
-	const hasFilters = () => Boolean(query().search || query().categories.length);
+	const platformStores = createMemo(() => filterStores(stores, { search: '', categories: [], platform: query().platform }));
+	const hasFilters = () => Boolean(query().search || query().categories.length || query().platform);
 
 	function changeLayout(next: CatalogLayout) {
 		setLayout(next);
@@ -117,6 +118,7 @@ export function Catalog() {
 		const url = new URL(window.location.href);
 		url.searchParams.delete('q');
 		url.searchParams.delete('category');
+		url.searchParams.delete('platform');
 		new URLSearchParams(serializeQuery(next)).forEach((value, key) => url.searchParams.append(key, value));
 		window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
 	}
@@ -150,10 +152,7 @@ export function Catalog() {
 				<div class="collection-heading">
 					<div>
 						<p class="eyebrow">{t('filterHeading')}</p>
-						<h2>
-							{t('collection')}
-							<span class="collection-count">{stores.length.toString().padStart(2, '0')}</span>
-						</h2>
+						<h2>{t('collection')}</h2>
 						<p>{t('collectionDescription')}</p>
 					</div>
 					<div class="layout-switcher" role="group" aria-label={t('layout')}>
@@ -210,6 +209,26 @@ export function Catalog() {
 											disabled={!interactive()}
 										/>
 									</div>
+									<fieldset class="platform-filter" disabled={!interactive()}>
+										<legend class="category-heading">{t('platformFilter')}</legend>
+										<For each={['all', ...platforms] as const}>
+											{(platform) => (
+												<label class="platform-option" classList={{ selected: platform === (query().platform ?? 'all') }}>
+													<input
+														type="radio"
+														name="platform"
+														value={platform}
+														checked={platform === (query().platform ?? 'all')}
+														onChange={() => update({ ...query(), platform: platform === 'all' ? undefined : platform })}
+													/>
+													<span>{platform === 'all' ? t('allPlatforms') : platformNames[platform]}</span>
+													<span class="filter-count" aria-hidden="true">
+														{platform === 'all' ? stores.length : stores.filter((store) => store.platforms.includes(platform)).length}
+													</span>
+												</label>
+											)}
+										</For>
+									</fieldset>
 									<div class="category-heading">{t('categories')}</div>
 									<Button
 										variant="ghost"
@@ -218,7 +237,7 @@ export function Catalog() {
 										disabled={!interactive()}>
 										<Icon name="grid" />
 										<span>{t('allStores')}</span>
-										<span class="filter-count">{stores.length}</span>
+										<span class="filter-count">{platformStores().length}</span>
 									</Button>
 									<div class="category-list">
 										<For each={categories}>
@@ -236,7 +255,7 @@ export function Catalog() {
 														}
 													/>
 													<label for={`category-${category}`}>{t(`categories:${category}`)}</label>
-													<span class="filter-count">{stores.filter((store) => store.categories.includes(category)).length}</span>
+													<span class="filter-count">{platformStores().filter((store) => store.categories.includes(category)).length}</span>
 												</div>
 											)}
 										</For>
@@ -276,7 +295,7 @@ export function Catalog() {
 										<Button onClick={() => update({ search: '', categories: [] })}>{t('clear')}</Button>
 									</div>
 								}>
-								{(store) => <StoreCard store={store} index={stores.indexOf(store)} />}
+								{(store) => <StoreCard store={store} platform={query().platform} />}
 							</For>
 						</div>
 					</section>

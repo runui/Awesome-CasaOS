@@ -23,7 +23,7 @@ export function Contribution() {
 				<h2>{t('contributeTitle')}</h2>
 				<p>{t('contributeDescription')}</p>
 			</div>
-			<a class="primary-link" href={`${repository}/blob/main/CONTRIBUTING.md`}>
+			<a class="primary-link" href={`${repository}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer">
 				{t('contribute')}
 				<Icon name="plus" />
 			</a>

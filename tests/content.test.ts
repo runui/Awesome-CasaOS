@@ -46,9 +46,10 @@ test('optional language files may be absent and en overrides merge independently
 	expect(plain.en).toStrictEqual(plain.zh);
 	write('stores.en.json', { linuxserver: { name: 'English display name' } });
 	const compiled = compileContent(directory);
-	expect(compiled.en.stores[0].name).toBe('English display name');
-	expect(compiled.zh.stores[0].name).toBe(plain.zh.stores[0].name);
-	expect(compiled.zh.stores[0].searchText).toContain('english display name');
+	expect(compiled.en.stores.find((store) => store.slug === 'linuxserver')?.name).toBe('English display name');
+	const chinese = compiled.zh.stores.find((store) => store.slug === 'linuxserver')!;
+	expect(chinese.name).toBe(plain.zh.stores.find((store) => store.slug === 'linuxserver')?.name);
+	expect(chinese.searchText).toContain('english display name');
 });
 
 test('overrides merge nested IDs without mutating the base; arrays replace as a whole', () => {
@@ -94,10 +95,59 @@ test('committed language overrides do not repeat shared fields or unchanged UI m
 	const zh = JSON.parse(readFileSync('data/stores.zh.json', 'utf8'));
 	for (const [slug, override] of Object.entries(zh) as [string, Record<string, unknown>][]) {
 		expect(base[slug].summary).toBeTypeOf('string');
-		for (const key of ['repository', 'maintainer', 'name', 'categories', 'mark']) expect(override).not.toHaveProperty(key);
-		for (const source of Object.values(override.sources as Record<string, object>)) expect(source).not.toHaveProperty('url');
+		for (const key of ['repository', 'maintainer', 'name', 'categories', 'mark', 'platforms']) expect(override).not.toHaveProperty(key);
+		for (const source of Object.values(override.sources as Record<string, object>)) {
+			expect(source).not.toHaveProperty('url');
+			expect(source).not.toHaveProperty('platform');
+		}
 	}
 	const messages = JSON.parse(readFileSync('data/messages.json', 'utf8'));
 	const messagesZh = JSON.parse(readFileSync('data/messages.zh.json', 'utf8'));
 	for (const [key, value] of Object.entries(messagesZh)) expect(value).not.toEqual(messages[key]);
+});
+
+test('dual-platform sources keep distinct identities and URLs when labels are translated', () => {
+	const { directory, write } = fixture();
+	const base = JSON.parse(readFileSync('data/stores.json', 'utf8'));
+	base.linuxserver.sources['zimaos-arm64'] = { label: 'ARM64 source', platform: 'zimaos', url: 'https://example.com/zimaos/arm64/store.json' };
+	write('stores.json', base);
+	write('stores.zh.json', { linuxserver: { sources: { zimaos: { label: 'ZimaOS 清单源' }, default: { label: 'CasaOS 压缩包源' } } } });
+	const { en, zh } = compileContent(directory);
+	const store = zh.stores.find((store) => store.slug === 'linuxserver')!;
+	expect(store.platforms).toStrictEqual(['zimaos', 'casaos']);
+	expect(store.sources.filter((source) => source.platform === 'zimaos')).toHaveLength(2);
+	expect(store.sources.find((source) => source.id === 'zimaos')).toMatchObject({
+		platform: 'zimaos',
+		label: 'ZimaOS 清单源',
+		url: 'https://paodayag.dev/linuxserver/zimaos/store.json',
+	});
+	expect(store.sources.find((source) => source.id === 'default')).toMatchObject({
+		platform: 'casaos',
+		label: 'CasaOS 压缩包源',
+		url: 'https://paodayag.dev/linuxserver/casaos/store.zip',
+	});
+	expect(en.stores.find((store) => store.slug === 'linuxserver')?.sources.find((source) => source.id === 'zimaos')?.label).toBe('App store source');
+});
+
+test('locale overrides cannot change platform declarations or source platform assignments', () => {
+	const { directory, write } = fixture();
+	write('stores.zh.json', { linuxserver: { platforms: ['casaos'] } });
+	expect(() => compileContent(directory)).toThrow(/stores.zh.json.linuxserver.platforms/);
+	write('stores.zh.json', { linuxserver: { sources: { zimaos: { platform: 'casaos' } } } });
+	expect(() => compileContent(directory)).toThrow(/sources.zimaos.platform/);
+});
+
+test('raw store compilation rejects support without a source and sources outside declared platforms', () => {
+	const { directory, write } = fixture();
+	const base = JSON.parse(readFileSync('data/stores.json', 'utf8'));
+	base.coolstore.platforms = ['casaos', 'zimaos'];
+	write('stores.json', base);
+	expect(() => compileContent(directory)).toThrow(/zimaos requires at least one source/);
+	base.coolstore.platforms = ['casaos'];
+	base.coolstore.sources.default.platform = 'zimaos';
+	write('stores.json', base);
+	expect(() => compileContent(directory)).toThrow(/zimaos is not declared/);
+	base.coolstore.platforms = ['zimaos'];
+	write('stores.json', base);
+	expect(() => compileContent(directory)).toThrow(/ZimaOS sources require a JSON manifest URL/);
 });

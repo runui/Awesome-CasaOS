@@ -7,6 +7,8 @@ import { Icon } from '../components/Icon';
 import { CommunityNote, Contribution } from '../components/Community';
 import { StoreArtwork } from '../components/StoreArtwork';
 import { SourceCopy } from '../components/SourceCopy';
+import { PlatformBadges } from '../components/PlatformBadges';
+import { platforms, platformNames } from '../data/platforms';
 
 export function StoreDetail(props: { store: Store }) {
 	const { locale, href, t, stores } = usePage();
@@ -25,12 +27,13 @@ export function StoreDetail(props: { store: Store }) {
 			<div class="detail-heading">
 				<div>
 					<div class="detail-badges">
+						<PlatformBadges supported={props.store.platforms} />
 						<For each={props.store.categories}>{(category) => <Badge variant="secondary">{t(`categories:${category}`)}</Badge>}</For>
 					</div>
 					<h1>{props.store.name}</h1>
 					<p>{props.store.summary}</p>
 				</div>
-				<a class="primary-link" href={props.store.repository}>
+				<a class="primary-link" href={props.store.repository} target="_blank" rel="noopener noreferrer">
 					{t('visitRepository')}
 					<Icon name="external" />
 				</a>
@@ -46,7 +49,14 @@ export function StoreDetail(props: { store: Store }) {
 						<p class="eyebrow">02 / {t('sources')}</p>
 						<h2>{t('sources')}</h2>
 						<p>{t('sourcesDescription')}</p>
-						<For each={props.store.sources}>{(source) => <SourceCopy source={source} />}</For>
+						<For each={platforms.filter((platform) => props.store.platforms.includes(platform))}>
+							{(platform) => (
+								<div class="platform-source-group" data-platform={platform}>
+									<h3>{t('platformSources', { platform: platformNames[platform] })}</h3>
+									<For each={props.store.sources.filter((source) => source.platform === platform)}>{(source) => <SourceCopy source={source} />}</For>
+								</div>
+							)}
+						</For>
 					</section>
 					<section class="steps-section">
 						<h2>{t('howTo')}</h2>
@@ -70,6 +80,15 @@ export function StoreDetail(props: { store: Store }) {
 				</div>
 				<aside class="detail-facts">
 					<div>
+						<h2>{t('supportedPlatforms')}</h2>
+						<p>
+							{platforms
+								.filter((platform) => props.store.platforms.includes(platform))
+								.map((platform) => platformNames[platform])
+								.join(' / ')}
+						</p>
+					</div>
+					<div>
 						<h2>{t('maintainer')}</h2>
 						<p>{props.store.maintainer}</p>
 					</div>
@@ -81,7 +100,7 @@ export function StoreDetail(props: { store: Store }) {
 						<h2>{t('sourceCount')}</h2>
 						<p>{props.store.sources.length.toString().padStart(2, '0')}</p>
 					</div>
-					<a href={props.store.repository}>
+					<a href={props.store.repository} target="_blank" rel="noopener noreferrer">
 						{t('repository')}
 						<Icon name="external" />
 					</a>

@@ -4,11 +4,37 @@ Have a useful app store for ZimaOS or CasaOS that you’re committed to maintain
 
 ## Add or update a store
 
-Edit `data/stores.json`, the only maintained base store list. Use a stable lowercase slug as the object key and append new entries to preserve the existing collection order.
+Edit `data/stores.json`, the only maintained base store list. Use a stable lowercase slug as the object key and append new entries. The compiled collection puts stores with ZimaOS sources first and preserves the JSON order within each support group.
 
 Include the store’s name and short `mark`, maintainer, HTTPS GitHub repository URL, at least one existing category ID, and English `summary` and `description`. Add translated fields under the same slug in `data/stores.zh.json`. Keep summaries brief and descriptions factual; avoid unsupported claims about availability, security, or compatibility.
 
-The `sources` object uses stable source IDs as keys, each containing an English `label` and the exact HTTPS ZIP `url` accepted by the target platform’s App Store. State which ZimaOS and CasaOS versions and device architectures you have tested in the store’s description or documentation. Translate only the label in the locale override; do not repeat the URL. Keep architecture-specific variants separate and clearly labeled. Do not infer platform or architecture support from a repository name.
+Declare `platforms` explicitly with one or both of `"zimaos"` and `"casaos"`. Including `"zimaos"` enables the distinctive ZimaOS support badge and platform filter. Keep platform support separate from topic categories.
+
+The `sources` object uses stable source IDs as keys. Each source requires an English `label`, a single `platform` (`"zimaos"` or `"casaos"`), and the exact HTTPS `url` accepted by that platform’s App Store. ZimaOS requires a native JSON manifest URL; a CasaOS ZIP archive cannot be declared as a ZimaOS source. Archive URLs assigned to ZimaOS fail validation. Multiple URLs for the same platform are allowed, for example architecture-specific variants. Application compatibility does not prove that a store offers a native source for both systems. Each platform declaration needs its own verified installation URL.
+
+Every declared platform must have at least one source, and every source must belong to a declared platform. Empty, duplicate, unknown, or mismatched platform declarations fail the build. Platform declarations and source platform assignments belong only in the base file; locale overrides cannot change them. Translate only the source label in locale overrides, without repeating the URL.
+
+For example, the verified LinuxServer sources are:
+
+```json
+{
+	"platforms": ["zimaos", "casaos"],
+	"sources": {
+		"zimaos": {
+			"label": "App store source",
+			"platform": "zimaos",
+			"url": "https://paodayag.dev/linuxserver/zimaos/store.json"
+		},
+		"default": {
+			"label": "App store source",
+			"platform": "casaos",
+			"url": "https://paodayag.dev/linuxserver/casaos/store.zip"
+		}
+	}
+}
+```
+
+Confirm compatibility and installation URLs from upstream documentation or a reproducible device test. Check published branches (such as `gh-pages`), hosted manifests, releases, and the [ZimaOS community stores documentation](https://www.zimaspace.com/docs/zimaos/app-store/awesome-third-party-stores) alongside default-branch READMEs. Fetch the declared JSON manifest and its index to confirm the source identity and format. Record supporting links in [docs/platform-sources.md](docs/platform-sources.md), including relevant versions, architectures, and any limitations. Do not infer support from a repository name, a similar URL, or another store’s compatibility. A CasaOS-only declaration means that only CasaOS support is currently recorded; it does not assert incompatibility with ZimaOS.
 
 Store slugs are public URLs. Avoid changing them; a necessary change should include static transition routes for the old links. Logos are optional: the directory creates a consistent text cover from `mark`.
 

@@ -52,7 +52,7 @@
 	"back": "Back to the collection",
 	"about": "About this store",
 	"sources": "Add to ZimaOS and CasaOS",
-	"sourcesDescription": "Copy a source URL, then add it to the App Store on ZimaOS or CasaOS. Check the store’s documentation for supported system versions and device requirements.",
+	"sourcesDescription": "Choose the sources for your system. ZimaOS and CasaOS may use different URLs; check the upstream documentation for version and device requirements.",
 	"sourceUrl": "Source URL",
 	"chooseSource": "Choose a source ({{count}} available)",
 	"chooseSourceHeading": "Copy a source URL",
@@ -81,5 +81,10 @@
 	"oldPage": "This page has a new home.",
 	"continue": "Continue to the collection",
 	"directoryTitle": "ZimaOS and CasaOS app stores",
-	"directoryMeta": "Explore community app stores for ZimaOS and CasaOS. We recommend starting with ZimaOS. Find community projects and app sources for your personal cloud."
+	"directoryMeta": "Explore community app stores for ZimaOS and CasaOS. We recommend starting with ZimaOS. Find community projects and app sources for your personal cloud.",
+	"platformFilter": "Platform",
+	"allPlatforms": "All platforms",
+	"supportedPlatforms": "Supported platforms",
+	"supportsZimaos": "Supports ZimaOS",
+	"platformSources": "{{platform}} sources"
 }

@@ -1,22 +1,28 @@
 {
 	"linuxserver": {
-		"summary": "把 LinuxServer.io 镜像带到你的 CasaOS。",
-		"description": "一个为 CasaOS 打造的自定义应用商店。原收录介绍包含超过 100 个 LinuxServer.io 镜像，为你的个人云提供丰富的应用选择。",
+		"summary": "为 ZimaOS 和 CasaOS 提供 LinuxServer.io 应用，源地址按平台区分。",
+		"description": "一个包含超过 100 个 LinuxServer.io 镜像的社区应用商店。上游为 ZimaOS 提供 JSON 商店清单，为 CasaOS 提供独立的 ZIP 源，请按你的系统选择地址。",
 		"sources": {
 			"default": {
+				"label": "应用商店源"
+			},
+			"zimaos": {
 				"label": "应用商店源"
 			}
 		}
 	},
 	"appstore-play": {
-		"summary": "收录常用国内应用，并提供 ARMv7 设备专用源。",
-		"description": "一个「不太正经」的 CasaOS 应用商店，主要收录迅雷、青龙、微力同步等国内应用，使用 :latest 标签。另有适用于树莓派 2、玩客云及其他 ARMv7 设备的专用源。",
+		"summary": "为 ZimaOS 和 CasaOS 收录常用国内应用，另有 CasaOS ARMv7 专用源。",
+		"description": "一个主要收录迅雷、青龙、微力同步等国内应用的社区商店。ZimaOS 使用官方文档列出的原生 JSON 源，CasaOS 使用独立的 ZIP 源。应用使用 :latest 标签；另有适用于树莓派 2、玩客云及类似设备的 CasaOS ARMv7 专用源。",
 		"sources": {
 			"default": {
 				"label": "普通源"
 			},
 			"armv7": {
 				"label": "ARMv7 专用 · 树莓派 2 / 玩客云"
+			},
+			"zimaos": {
+				"label": "应用商店源"
 			}
 		}
 	},
@@ -31,7 +37,7 @@
 	},
 	"edge": {
 		"summary": "基于官方应用商店的社区分支，提供更新版本。",
-		"description": "从 CasaOS 官方应用商店 Fork 而来的社区项目，提供更新的应用版本，由社区独立维护。",
+		"description": "一个曾提供较新应用版本的 CasaOS 官方商店社区分支。上游现已归档，并建议使用 CasaOS 官方应用商店仓库。",
 		"sources": {
 			"default": {
 				"label": "应用商店源"
@@ -49,9 +55,12 @@
 	},
 	"big-bear": {
 		"summary": "来自 Big Bear 与社区伙伴的应用集合。",
-		"description": "Big Bear CasaOS 应用商店由 BigBearTechWorld 和 BigBearCommunity 共同维护，是独立于 CasaOS 团队的社区应用商店。",
+		"description": "Big Bear 应用商店由 BigBearTechWorld 和 BigBearCommunity 为 ZimaOS 和 CasaOS 独立维护。ZimaOS 使用仓库 gh-pages 分支发布、并列于 ZimaOS 官方文档的原生 JSON 源；CasaOS 使用独立的 master 分支 ZIP 源。",
 		"sources": {
 			"default": {
+				"label": "应用商店源"
+			},
+			"zimaos": {
 				"label": "应用商店源"
 			}
 		}
@@ -76,9 +85,18 @@
 	},
 	"generative-ai-workbench": {
 		"summary": "为数字创作者与工作室准备的生成式 AI 工作台。",
-		"description": "Foundry Workbench 为数字创作者与工作室汇集应用、工具和即用方案，服务于构思、设计、开发、创作与发布。虽然仓库名带有 ZimaOS，原收录说明指出，在配备合适 GPU 的情况下也可用于 CasaOS。",
+		"description": "Foundry Workbench 为数字创作者与工作室汇集生成式 AI 应用和工具。上游在 ZimaOS 上开发这些应用，并声明兼容 CasaOS。当前收录 CasaOS ZIP 源，尚未核实可添加到 ZimaOS 的原生 JSON 清单。部分应用需要合适的 GPU 及额外配置。",
 		"sources": {
 			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"lintuxer": {
+		"summary": "为 ZimaOS 提供社区应用，并记录各应用的验证情况。",
+		"description": "一个列于 ZimaOS 官方文档、使用原生 v2 JSON 源的社区应用商店。维护者记录了各应用的检查结果、测试版本和配置说明；设备与配置要求请以对应应用的说明为准。",
+		"sources": {
+			"zimaos": {
 				"label": "应用商店源"
 			}
 		}

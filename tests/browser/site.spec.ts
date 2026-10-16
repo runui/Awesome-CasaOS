@@ -4,7 +4,7 @@ test('pre-rendered catalog hydrates, searches, filters, clears, and restores que
 	const errors: string[] = [];
 	page.on('pageerror', (error) => errors.push(error.message));
 	await page.goto('./');
-	await expect(page.locator('.store-card')).toHaveCount(9);
+	await expect(page.locator('.store-card')).toHaveCount(10);
 	await expect(page.locator('.filter-trigger')).toBeHidden();
 	await page.getByRole('searchbox').fill('迅雷');
 	await expect(page.locator('.store-card')).toHaveCount(1);
@@ -39,7 +39,7 @@ test('default paths and explicit language paths take precedence over browser and
 	await page.goto(baseURL!);
 	await expect(page).toHaveURL(baseURL!);
 	await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-	await expect(page.locator('.store-card')).toHaveCount(9);
+	await expect(page.locator('.store-card')).toHaveCount(10);
 	await page.goto(`${baseURL}content/3rd-party-app-stores/list.html`);
 	await expect(page).toHaveURL(`${baseURL}zh/`);
 	await page.getByRole('link', { name: 'Switch to English' }).click();
@@ -62,8 +62,8 @@ test('detail refresh, both source variants, native and compatibility clipboard w
 	await context.grantPermissions(['clipboard-read', 'clipboard-write']);
 	await page.goto('stores/appstore-play/');
 	await page.reload();
-	await expect(page.locator('.source-url')).toHaveCount(2);
-	await page.getByRole('button', { name: 'Copy URL' }).first().click();
+	await expect(page.locator('.source-url')).toHaveCount(3);
+	await page.getByRole('button', { name: 'Copy URL: CasaOS · Standard source', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Copied to clipboard' })).toBeVisible();
 	expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play.zip');
 	await page.evaluate(() =>
@@ -71,14 +71,14 @@ test('detail refresh, both source variants, native and compatibility clipboard w
 			value: () => Promise.reject(new Error('denied')),
 		}),
 	);
-	await page.getByRole('button', { name: 'Copy URL' }).click();
-	const armCopy = page.getByRole('button', { name: 'Copied to clipboard: ARMv7 · Raspberry Pi 2 / OneCloud', exact: true });
+	await page.getByRole('button', { name: 'Copy URL: CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud', exact: true }).click();
+	const armCopy = page.getByRole('button', { name: 'Copied to clipboard: CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud', exact: true });
 	await expect(armCopy).toBeVisible();
 	expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip');
 	await page.evaluate(() => Object.defineProperty(document, 'execCommand', { value: () => false }));
 	await armCopy.click();
 	await expect(page.getByText('Couldn’t write to the clipboard. Please try again.')).toBeVisible();
-	await expect(page.locator('.source-url')).toHaveCount(2);
+	await expect(page.locator('.source-url')).toHaveCount(3);
 	await expect(page.locator('textarea')).toHaveCount(0);
 });
 
@@ -86,16 +86,16 @@ test('default pages, prefixed aliases, tutorials, and legacy links work without 
 	const context = await browser.newContext({ javaScriptEnabled: false });
 	const page = await context.newPage();
 	await page.goto(baseURL!);
-	await expect(page.locator('.store-card')).toHaveCount(9);
-	await page.locator('.store-card h3 a').first().click();
+	await expect(page.locator('.store-card')).toHaveCount(10);
+	await page.getByRole('heading', { name: 'CasaOS-LinuxServer-AppStore', exact: true }).getByRole('link').click();
 	await expect(page.locator('h1')).toHaveText('CasaOS-LinuxServer-AppStore');
-	await expect(page.locator('.source-url')).toHaveValue('https://casaos-appstore.paodayag.dev/linuxserver.zip');
+	await expect(page.locator('.platform-source-group[data-platform="casaos"] .source-url')).toHaveValue('https://paodayag.dev/linuxserver/casaos/store.zip');
 	await page.goto(`${baseURL}zh/guides/create-app-store/`);
 	await expect(page.getByRole('heading', { name: '01 — Fork 一个商店' })).toBeVisible();
 	await page.goto(baseURL!);
 	await expect(page.getByRole('link', { name: '切换到中文' })).toBeVisible();
 	await page.goto(`${baseURL}en/stores/appstore-play/`);
-	await expect(page.locator('.source-url')).toHaveCount(2);
+	await expect(page.locator('.source-url')).toHaveCount(3);
 	await page.goto(`${baseURL}en/guides/create-app-store/`);
 	await expect(page.getByRole('heading', { name: '01 — Fork an app store' })).toBeVisible();
 	await page.goto(`${baseURL}content/3rd-party-app-stores/list.html`);
@@ -161,7 +161,7 @@ test('prefixed aliases refresh, hydrate, and navigate to the unprefixed default 
 	await page.goto('en/stores/appstore-play/');
 	await page.reload();
 	await expect(page).toHaveURL(`${baseURL}en/stores/appstore-play/`);
-	await expect(page.locator('.source-url')).toHaveCount(2);
+	await expect(page.locator('.source-url')).toHaveCount(3);
 	await page.getByRole('link', { name: '切换到中文' }).click();
 	await expect(page).toHaveURL(`${baseURL}zh/stores/appstore-play/`);
 	await page.getByRole('link', { name: 'Switch to English' }).click();

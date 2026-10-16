@@ -3,6 +3,7 @@ import { resolveLocale } from '../src/lib/i18n';
 import { allRoutes, resolveRoute, translatedPath } from '../src/lib/routes';
 import { localePath, normalizeBase, stripBase, withBase } from '../src/lib/paths';
 import { normalizeSiteUrl, pageHead } from '../src/lib/seo';
+import { stores } from '../src/data/stores';
 
 test('saved language wins; browser languages match in order; unsupported languages fall back to English', () => {
 	expect(resolveLocale('zh', ['en-US'])).toBe('zh');
@@ -14,7 +15,8 @@ test('saved language wins; browser languages match in order; unsupported languag
 
 test('all stores and tutorials have matching language routes', () => {
 	const routes = allRoutes();
-	expect(routes.filter((route) => route.kind === 'store')).toHaveLength(27);
+	// Each store has English and Chinese canonical pages plus the historic /en/ alias.
+	expect(routes.filter((route) => route.kind === 'store')).toHaveLength(stores.length * 3);
 	for (const route of routes.filter((route) => ['catalog', 'store', 'guide'].includes(route.kind))) {
 		const counterpart = resolveRoute(translatedPath(route, route.locale === 'en' ? 'zh' : 'en'));
 		expect(counterpart.kind).toBe(route.kind);

@@ -59,7 +59,19 @@ export function compileContent(directory = dataDirectory): Catalogs {
 			const merged = Object.fromEntries(
 				names.map((name) => {
 					const file = `${name}.${locale}.json`;
-					const value = existsSync(join(directory, file)) ? mergeOverride(base[name], readJson(directory, file), file) : base[name];
+					const override = existsSync(join(directory, file)) ? readJson(directory, file) : undefined;
+					// Platform identity is shared across languages; translations may only change its display text.
+					if (name === 'stores' && isObject(override)) {
+						for (const [slug, store] of Object.entries(override)) {
+							if (!isObject(store)) continue;
+							if ('platforms' in store) throw new Error(`${file}.${slug}.platforms: platform declarations belong in stores.json`);
+							if (isObject(store.sources))
+								for (const [id, source] of Object.entries(store.sources)) {
+									if (isObject(source) && 'platform' in source) throw new Error(`${file}.${slug}.sources.${id}.platform: source platforms belong in stores.json`);
+								}
+						}
+					}
+					const value = override === undefined ? base[name] : mergeOverride(base[name], override, file);
 					return [name, value];
 				}),
 			);
@@ -90,12 +102,22 @@ export function compileContent(directory = dataDirectory): Catalogs {
 		const searchText = locales
 			.flatMap((locale) => {
 				const store = catalogs[locale].stores[index];
-				return [store.name, store.maintainer, store.summary, store.description, ...store.categories.map((category) => catalogs[locale].categoryLabels[category])];
+				return [
+					store.name,
+					store.maintainer,
+					store.summary,
+					store.description,
+					...store.platforms,
+					...store.categories.map((category) => catalogs[locale].categoryLabels[category]),
+				];
 			})
 			.join(' ')
 			.toLowerCase();
 		for (const locale of locales) catalogs[locale].stores[index].searchText = searchText;
 	}
+	// Sort the compiled catalogs so static HTML, hydrated views, and detail indexes share one order.
+	// Stable sorting preserves the source JSON order within each platform-support group.
+	for (const locale of locales) catalogs[locale].stores.sort((first, second) => Number(second.platforms.includes('zimaos')) - Number(first.platforms.includes('zimaos')));
 	return catalogs;
 }
 

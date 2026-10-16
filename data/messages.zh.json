@@ -48,7 +48,7 @@
 	"back": "返回商店目录",
 	"about": "关于这个商店",
 	"sources": "添加到 ZimaOS 和 CasaOS",
-	"sourcesDescription": "复制源地址，在 ZimaOS 或 CasaOS 的应用商店中添加。具体系统版本和设备要求请以商店说明为准。",
+	"sourcesDescription": "按你的系统选择应用源。ZimaOS 和 CasaOS 的地址可能不同，系统版本和设备要求请查看上游文档。",
 	"sourceUrl": "源地址",
 	"chooseSource": "选择应用源（共 {{count}} 个）",
 	"chooseSourceHeading": "选择要复制的源地址",
@@ -77,5 +77,10 @@
 	"oldPage": "这个页面有了新家。",
 	"continue": "前往商店目录",
 	"directoryTitle": "ZimaOS 和 CasaOS 应用商店",
-	"directoryMeta": "探索 ZimaOS 和 CasaOS 的社区应用商店。推荐从 ZimaOS 开始，发现社区项目，获取应用源地址，打造属于你的个人云。"
+	"directoryMeta": "探索 ZimaOS 和 CasaOS 的社区应用商店。推荐从 ZimaOS 开始，发现社区项目，获取应用源地址，打造属于你的个人云。",
+	"platformFilter": "适用平台",
+	"allPlatforms": "全部平台",
+	"supportedPlatforms": "支持平台",
+	"supportsZimaos": "支持 ZimaOS",
+	"platformSources": "{{platform}} 应用源"
 }

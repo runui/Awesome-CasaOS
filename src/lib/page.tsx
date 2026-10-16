@@ -5,6 +5,7 @@ import { withBase } from './paths';
 import type { PageData } from './routes';
 
 export const repository = 'https://github.com/IceWhaleTech/Awesome-CasaOS';
+export const createStoreGuideUrl = 'https://www.zimaspace.com/docs/developer/app-store-create-from-scratch';
 export const PageContext = createContext<PageData>();
 
 export function usePage() {

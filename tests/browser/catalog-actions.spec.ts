@@ -21,7 +21,7 @@ test('layout choice survives refresh and language changes without changing filte
 });
 
 test('flat source actions copy exact variants from cards and list menus without navigating or opening inputs', async ({ page, baseURL }) => {
-	await page.goto('./#collection');
+	await page.goto('./?platform=casaos#collection');
 	// Use a per-context clipboard stub so parallel browser tests cannot overwrite each other's system clipboard.
 	await page.evaluate(() =>
 		Object.defineProperty(navigator.clipboard, 'writeText', {
@@ -42,28 +42,28 @@ test('flat source actions copy exact variants from cards and list menus without 
 		'https://play.cuse.eu.org/Cp0204-AppStore-Play.zip',
 		'https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip',
 	]);
-	await page.getByRole('menuitem', { name: 'Copy URL: Standard source', exact: true }).click();
+	await page.getByRole('menuitem', { name: 'Copy URL: CasaOS · Standard source', exact: true }).click();
 	await expect(trigger).toHaveText('Copied to clipboard');
-	await expect(play.getByRole('status')).toHaveText('Copied to clipboard Standard source');
+	await expect(play.getByRole('status')).toHaveText('Copied to clipboard CasaOS · Standard source');
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play.zip');
 	await page.getByRole('button', { name: 'List view', exact: true }).click();
 	await expect(trigger).toHaveText('Copied to clipboard');
 	await trigger.click();
 	await expect(page.getByRole('menuitem')).toHaveCount(2);
-	await page.getByRole('menuitem', { name: 'Copy URL: ARMv7 · Raspberry Pi 2 / OneCloud', exact: true }).click();
+	await page.getByRole('menuitem', { name: 'Copy URL: CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud', exact: true }).click();
 	await expect(page.getByRole('menu')).toHaveCount(0);
 	await expect(trigger).toHaveText('Copied to clipboard');
-	await expect(play.getByRole('status')).toHaveText('Copied to clipboard ARMv7 · Raspberry Pi 2 / OneCloud');
+	await expect(play.getByRole('status')).toHaveText('Copied to clipboard CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud');
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip');
 	await expect(play.getByRole('textbox')).toHaveCount(0);
-	await expect(page).toHaveURL(`${baseURL}#collection`);
+	await expect(page).toHaveURL(`${baseURL}?platform=casaos#collection`);
 
 	await page.evaluate(() => {
 		Object.defineProperty(navigator.clipboard, 'writeText', { value: () => Promise.reject(new Error('denied')) });
 		Object.defineProperty(document, 'execCommand', { value: () => false });
 	});
 	const edge = page.locator('.store-card').filter({ has: page.getByRole('heading', { name: 'CasaOS (Edge) AppStore', exact: true }) });
-	await edge.getByRole('button', { name: 'Copy URL: App store source', exact: true }).click();
+	await edge.getByRole('button', { name: 'Copy URL: CasaOS · App store source', exact: true }).click();
 	await expect(edge.getByRole('status')).toHaveText('Couldn’t write to the clipboard. Please try again.');
 	await expect(edge.getByRole('textbox')).toHaveCount(0);
 	await expect(page.locator('textarea')).toHaveCount(0);
@@ -71,7 +71,7 @@ test('flat source actions copy exact variants from cards and list menus without 
 	await page.getByRole('button', { name: 'Card view', exact: true }).click();
 	await expect(edge.getByRole('status')).toHaveText('Couldn’t write to the clipboard. Please try again.');
 	await expect(edge.getByRole('textbox')).toHaveCount(0);
-	await expect(page).toHaveURL(`${baseURL}#collection`);
+	await expect(page).toHaveURL(`${baseURL}?platform=casaos#collection`);
 	await edge.getByRole('heading').getByRole('link').click();
 	await expect(page).toHaveURL(`${baseURL}stores/edge/`);
 });
@@ -79,7 +79,7 @@ test('flat source actions copy exact variants from cards and list menus without 
 test('pending copying stays disabled through view changes and can finish safely after filtering removes the item', async ({ page }) => {
 	const errors: string[] = [];
 	page.on('pageerror', (error) => errors.push(error.message));
-	await page.goto('./#collection');
+	await page.goto('./?platform=casaos#collection');
 	await page.evaluate(() =>
 		Object.defineProperty(navigator.clipboard, 'writeText', {
 			value: () =>
@@ -89,15 +89,15 @@ test('pending copying stays disabled through view changes and can finish safely 
 		}),
 	);
 	const first = page.locator('.store-card').first();
-	await first.getByRole('button', { name: 'Copy URL: App store source', exact: true }).click();
-	await expect(first.getByRole('button', { name: 'Copying…: App store source', exact: true })).toBeDisabled();
+	await first.getByRole('button', { name: 'Copy URL: CasaOS · App store source', exact: true }).click();
+	await expect(first.getByRole('button', { name: 'Copying…: CasaOS · App store source', exact: true })).toBeDisabled();
 	await page.getByRole('button', { name: 'List view', exact: true }).click();
-	await expect(first.getByRole('button', { name: 'Copying…: App store source', exact: true })).toBeDisabled();
+	await expect(first.getByRole('button', { name: 'Copying…: CasaOS · App store source', exact: true })).toBeDisabled();
 	await page.getByRole('searchbox').fill('Coolstore');
 	await expect(page.locator('.store-card')).toHaveCount(1);
 	await page.evaluate(() => (window as unknown as { completeCopy: () => void }).completeCopy());
 	await expect(page.locator('.store-card h3')).toHaveText('CasaOS-Coolstore');
-	await expect(page.locator('.store-card').getByRole('button', { name: 'Copy URL: App store source', exact: true })).toBeEnabled();
+	await expect(page.locator('.store-card').getByRole('button', { name: 'Copy URL: CasaOS · App store source', exact: true })).toBeEnabled();
 	expect(errors).toEqual([]);
 });
 
@@ -119,13 +119,13 @@ test('direct copy uses a temporary invisible compatibility control when storage 
 			},
 		});
 	});
-	await page.goto('zh/#collection');
+	await page.goto('zh/?platform=casaos#collection');
 	await page.getByRole('button', { name: '列表视图', exact: true }).click();
 	await expect(page.locator('#store-results')).toHaveAttribute('data-layout', 'list');
-	const first = page.locator('.store-card').first();
-	await first.getByRole('button', { name: '复制地址: 应用商店源', exact: true }).click();
-	await expect(first.getByRole('button', { name: '已写入剪贴板: 应用商店源', exact: true })).toBeVisible();
-	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://casaos-appstore.paodayag.dev/linuxserver.zip');
+	const first = page.locator('.store-card').filter({ has: page.getByRole('heading', { name: 'CasaOS-LinuxServer-AppStore', exact: true }) });
+	await first.getByRole('button', { name: '复制地址: CasaOS · 应用商店源', exact: true }).click();
+	await expect(first.getByRole('button', { name: '已写入剪贴板: CasaOS · 应用商店源', exact: true })).toBeVisible();
+	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://paodayag.dev/linuxserver/casaos/store.zip');
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copy-control-hidden'))).toBe('true');
 	await expect(page.locator('textarea')).toHaveCount(0);
 	await expect(first.getByRole('textbox')).toHaveCount(0);
@@ -135,7 +135,7 @@ test('direct copy uses a temporary invisible compatibility control when storage 
 });
 
 test('source menu supports keyboard navigation and requires an explicit URL choice on every copy', async ({ page }) => {
-	await page.goto('./#collection');
+	await page.goto('./?platform=casaos#collection');
 	await page.evaluate(() =>
 		Object.defineProperty(navigator.clipboard, 'writeText', {
 			value: async (url: string) => {
@@ -157,14 +157,14 @@ test('source menu supports keyboard navigation and requires an explicit URL choi
 	await page.keyboard.press('Enter');
 	await expect(page.getByRole('menu')).toHaveCount(0);
 	await expect(trigger).toHaveText('Copied to clipboard');
-	await expect(play.getByRole('status')).toHaveText('Copied to clipboard ARMv7 · Raspberry Pi 2 / OneCloud');
+	await expect(play.getByRole('status')).toHaveText('Copied to clipboard CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud');
 	await expect(trigger).toBeFocused();
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip');
 	await page.evaluate(() => sessionStorage.removeItem('test-copied-url'));
 	await trigger.click();
 	await expect(page.getByRole('menu')).toBeVisible();
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBeNull();
-	await page.getByRole('menuitem', { name: 'Copy URL: Standard source', exact: true }).click();
+	await page.getByRole('menuitem', { name: 'Copy URL: CasaOS · Standard source', exact: true }).click();
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play.zip');
 	await trigger.click();
 	await page.getByRole('heading', { name: 'The collection', exact: false }).click();
@@ -176,7 +176,7 @@ test('source menu supports keyboard navigation and requires an explicit URL choi
 });
 
 test('multi-source copying stays tied to the chosen URL while pending and can be retried from the menu', async ({ page }) => {
-	await page.goto('./#collection');
+	await page.goto('./?platform=casaos#collection');
 	await page.evaluate(() => {
 		Object.defineProperty(navigator.clipboard, 'writeText', {
 			configurable: true,
@@ -191,7 +191,7 @@ test('multi-source copying stays tied to the chosen URL while pending and can be
 	const play = page.locator('.store-card').filter({ has: page.getByRole('heading', { name: 'CasaOS-AppStore-Play', exact: true }) });
 	const trigger = play.getByRole('button', { name: 'Choose a source (2 available)', exact: true });
 	await trigger.click();
-	await page.getByRole('menuitem', { name: 'Copy URL: ARMv7 · Raspberry Pi 2 / OneCloud', exact: true }).click();
+	await page.getByRole('menuitem', { name: 'Copy URL: CasaOS · ARMv7 · Raspberry Pi 2 / OneCloud', exact: true }).click();
 	await expect(trigger).toHaveText('Copying…');
 	await expect(trigger).toBeFocused();
 	await page.getByRole('button', { name: 'List view', exact: true }).click();
@@ -211,16 +211,16 @@ test('multi-source copying stays tied to the chosen URL while pending and can be
 		}),
 	);
 	await trigger.click();
-	await page.getByRole('menuitem', { name: 'Copy URL: Standard source', exact: true }).click();
+	await page.getByRole('menuitem', { name: 'Copy URL: CasaOS · Standard source', exact: true }).click();
 	await expect(trigger).toHaveText('Copied to clipboard');
-	await expect(play.getByRole('status')).toHaveText('Copied to clipboard Standard source');
+	await expect(play.getByRole('status')).toHaveText('Copied to clipboard CasaOS · Standard source');
 	expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://play.cuse.eu.org/Cp0204-AppStore-Play.zip');
 });
 
 for (const view of ['Card view', 'List view']) {
 	test(`outside clicks dismiss the ${view} source menu before copying, switching layouts, or navigating`, async ({ page, baseURL }) => {
 		await page.setViewportSize({ width: 1440, height: 1080 });
-		await page.goto('./#collection');
+		await page.goto('./?platform=casaos#collection');
 		await page.evaluate(() =>
 			Object.defineProperty(navigator.clipboard, 'writeText', {
 				value: async (url: string) => {
@@ -231,14 +231,17 @@ for (const view of ['Card view', 'List view']) {
 		await page.getByRole('button', { name: view, exact: true }).click();
 		const play = page.locator('.store-card').filter({ has: page.getByRole('heading', { name: 'CasaOS-AppStore-Play', exact: true }) });
 		const trigger = play.getByRole('button', { name: 'Choose a source (2 available)', exact: true });
-		const singleCopy = page.locator('.store-card').first().getByRole('button', { name: 'Copy URL: App store source', exact: true });
+		const singleCopy = page
+			.locator('.store-card')
+			.filter({ has: page.getByRole('heading', { name: 'CasaOS-LinuxServer-AppStore', exact: true }) })
+			.getByRole('button', { name: 'Copy URL: CasaOS · App store source', exact: true });
 		await trigger.click();
 		await singleCopy.click();
 		await expect(page.getByRole('menu')).toHaveCount(0);
 		expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBeNull();
 		await expect(trigger).toBeFocused();
 		await singleCopy.click();
-		expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://casaos-appstore.paodayag.dev/linuxserver.zip');
+		expect(await page.evaluate(() => sessionStorage.getItem('test-copied-url'))).toBe('https://paodayag.dev/linuxserver/casaos/store.zip');
 
 		await trigger.click();
 		const nextView = page.getByRole('button', { name: view === 'Card view' ? 'List view' : 'Card view', exact: true });
@@ -252,7 +255,7 @@ for (const view of ['Card view', 'List view']) {
 		const link = play.getByRole('heading').getByRole('link');
 		await link.click();
 		await expect(page.getByRole('menu')).toHaveCount(0);
-		await expect(page).toHaveURL(`${baseURL}#collection`);
+		await expect(page).toHaveURL(`${baseURL}?platform=casaos#collection`);
 		await link.click();
 		await expect(page).toHaveURL(`${baseURL}stores/appstore-play/`);
 	});
@@ -261,7 +264,7 @@ for (const view of ['Card view', 'List view']) {
 test('outside touch dismisses the source menu and the next tap activates its target', async ({ browser, baseURL }) => {
 	const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true });
 	const page = await context.newPage();
-	await page.goto(`${baseURL}zh/#collection`);
+	await page.goto(`${baseURL}zh/?platform=casaos#collection`);
 	const play = page.locator('.store-card').filter({ has: page.getByRole('heading', { name: 'CasaOS-AppStore-Play', exact: true }) });
 	const trigger = play.getByRole('button', { name: '选择应用源（共 2 个）', exact: true });
 	const link = play.getByRole('heading').getByRole('link');
@@ -270,7 +273,7 @@ test('outside touch dismisses the source menu and the next tap activates its tar
 		await trigger.tap();
 		await link.tap();
 		await expect(page.getByRole('menu')).toHaveCount(0);
-		await expect(page).toHaveURL(`${baseURL}zh/#collection`);
+		await expect(page).toHaveURL(`${baseURL}zh/?platform=casaos#collection`);
 	}
 	await link.tap();
 	await expect(page).toHaveURL(`${baseURL}zh/stores/appstore-play/`);
@@ -281,8 +284,8 @@ for (const width of [320, 390, 600, 768, 1440]) {
 	test(`both layouts and source menus fit a ${width}px viewport in both languages`, async ({ page }) => {
 		await page.setViewportSize({ width, height: 900 });
 		for (const [path, cards, list] of [
-			['./#collection', 'Card view', 'List view'],
-			['zh/#collection', '卡片视图', '列表视图'],
+			['./?platform=casaos#collection', 'Card view', 'List view'],
+			['zh/?platform=casaos#collection', '卡片视图', '列表视图'],
 		]) {
 			await page.goto(path);
 			for (const view of [list, cards]) {
@@ -310,7 +313,7 @@ for (const width of [320, 390, 600, 768, 1440]) {
 				}
 				await page
 					.locator('.store-card')
-					.nth(1)
+					.filter({ has: page.getByRole('heading', { name: 'CasaOS-AppStore-Play', exact: true }) })
 					.getByRole('button', { name: /Choose a source|选择应用源/ })
 					.click();
 				const menu = page.getByRole('menu');

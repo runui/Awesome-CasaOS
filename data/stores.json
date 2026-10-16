@@ -1,18 +1,47 @@
 {
+	"big-bear": {
+		"name": "Big Bear CasaOS App Store",
+		"mark": "BB",
+		"maintainer": "BigBearTechWorld & BigBearCommunity",
+		"repository": "https://github.com/bigbeartechworld/big-bear-casaos",
+		"categories": ["general"],
+		"summary": "A community app collection from Big Bear and friends.",
+		"description": "The Big Bear app store is independently maintained by BigBearTechWorld and the BigBearCommunity for ZimaOS and CasaOS. ZimaOS uses the native JSON source published from the repository's gh-pages branch and listed in the ZimaOS documentation. CasaOS uses the separate master-branch ZIP archive.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/bigbeartechworld/big-bear-casaos/archive/refs/heads/master.zip",
+				"platform": "casaos"
+			},
+			"zimaos": {
+				"label": "App store source",
+				"url": "https://cdn.jsdelivr.net/gh/bigbeartechworld/big-bear-casaos@gh-pages/store.json",
+				"platform": "zimaos"
+			}
+		},
+		"platforms": ["zimaos", "casaos"]
+	},
 	"linuxserver": {
 		"name": "CasaOS-LinuxServer-AppStore",
 		"mark": "LS",
 		"maintainer": "WisdomSky",
 		"repository": "https://github.com/WisdomSky/CasaOS-LinuxServer-AppStore",
 		"categories": ["general"],
-		"summary": "A home for LinuxServer.io images, ready for your CasaOS.",
-		"description": "A custom CasaOS app store described by its contributor as containing over 100 LinuxServer.io images. Explore a broad collection of applications for your personal cloud.",
+		"summary": "LinuxServer.io apps for ZimaOS and CasaOS, with separate platform sources.",
+		"description": "A community app store containing over 100 LinuxServer.io images. Upstream provides a JSON store manifest for ZimaOS and a separate ZIP source for CasaOS. Choose the source for your system.",
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://casaos-appstore.paodayag.dev/linuxserver.zip"
+				"url": "https://paodayag.dev/linuxserver/casaos/store.zip",
+				"platform": "casaos"
+			},
+			"zimaos": {
+				"label": "App store source",
+				"url": "https://paodayag.dev/linuxserver/zimaos/store.json",
+				"platform": "zimaos"
 			}
-		}
+		},
+		"platforms": ["zimaos", "casaos"]
 	},
 	"appstore-play": {
 		"name": "CasaOS-AppStore-Play",
@@ -20,18 +49,26 @@
 		"maintainer": "Cp0204",
 		"repository": "https://github.com/Cp0204/CasaOS-AppStore-Play",
 		"categories": ["china"],
-		"summary": "Local Chinese favorites, with a dedicated ARMv7 source.",
-		"description": "A not-so-serious app store focused on local Chinese applications, including Thunder, Qinglong, and VerySync. Applications use the :latest tag. A separate source is available for Raspberry Pi 2, OneCloud, and other ARMv7 devices.",
+		"summary": "Chinese community apps for ZimaOS and CasaOS, plus an ARMv7 CasaOS source.",
+		"description": "A community app store focused on Chinese applications, including Thunder, Qinglong, and VerySync. ZimaOS uses the native JSON source listed in the ZimaOS documentation; CasaOS uses separate ZIP sources. Applications use the :latest tag. The ARMv7 CasaOS source is intended for Raspberry Pi 2, OneCloud, and similar devices.",
 		"sources": {
 			"default": {
 				"label": "Standard source",
-				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play.zip"
+				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play.zip",
+				"platform": "casaos"
 			},
 			"armv7": {
 				"label": "ARMv7 · Raspberry Pi 2 / OneCloud",
-				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip"
+				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip",
+				"platform": "casaos"
+			},
+			"zimaos": {
+				"label": "App store source",
+				"url": "https://play.cuse.eu.org/store.json",
+				"platform": "zimaos"
 			}
-		}
+		},
+		"platforms": ["zimaos", "casaos"]
 	},
 	"coolstore": {
 		"name": "CasaOS-Coolstore",
@@ -44,9 +81,11 @@
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://casaos-appstore.paodayag.dev/coolstore.zip"
+				"url": "https://casaos-appstore.paodayag.dev/coolstore.zip",
+				"platform": "casaos"
 			}
-		}
+		},
+		"platforms": ["casaos"]
 	},
 	"edge": {
 		"name": "CasaOS (Edge) AppStore",
@@ -55,13 +94,15 @@
 		"repository": "https://github.com/WisdomSky/CasaOS-AppStore-Edge",
 		"categories": ["general"],
 		"summary": "A community fork of the official store with updated versions.",
-		"description": "A fork of the official CasaOS app store that offers updated application versions. This community project is maintained independently of the official store.",
+		"description": "An archived community fork of the official CasaOS app store that offered updated application versions. Upstream now directs users to the official CasaOS AppStore repository.",
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://paodayag.dev/casaos-appstore-edge.zip"
+				"url": "https://paodayag.dev/casaos-appstore-edge.zip",
+				"platform": "casaos"
 			}
-		}
+		},
+		"platforms": ["casaos"]
 	},
 	"home-automation": {
 		"name": "CasaOS HomeAutomation AppStore",
@@ -74,24 +115,11 @@
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://github.com/mr-manuel/CasaOS-HomeAutomation-AppStore/archive/refs/tags/latest.zip"
+				"url": "https://github.com/mr-manuel/CasaOS-HomeAutomation-AppStore/archive/refs/tags/latest.zip",
+				"platform": "casaos"
 			}
-		}
-	},
-	"big-bear": {
-		"name": "Big Bear CasaOS App Store",
-		"mark": "BB",
-		"maintainer": "BigBearTechWorld & BigBearCommunity",
-		"repository": "https://github.com/bigbeartechworld/big-bear-casaos",
-		"categories": ["general"],
-		"summary": "A community app collection from Big Bear and friends.",
-		"description": "The Big Bear CasaOS App Store is maintained by BigBearTechWorld and the BigBearCommunity. It is a community app store and is not maintained by the CasaOS team.",
-		"sources": {
-			"default": {
-				"label": "App store source",
-				"url": "https://github.com/bigbeartechworld/big-bear-casaos/archive/refs/heads/master.zip"
-			}
-		}
+		},
+		"platforms": ["casaos"]
 	},
 	"tmc": {
 		"name": "TMC Community App Store",
@@ -104,9 +132,11 @@
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://github.com/mariosemes/CasaOS-TMCstore/archive/refs/heads/main.zip"
+				"url": "https://github.com/mariosemes/CasaOS-TMCstore/archive/refs/heads/main.zip",
+				"platform": "casaos"
 			}
-		}
+		},
+		"platforms": ["casaos"]
 	},
 	"pentest-docker": {
 		"name": "CasaOS Pentest-Docker AppStore",
@@ -119,9 +149,11 @@
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://github.com/arch3rPro/Pentest-Docker/archive/refs/heads/master.zip"
+				"url": "https://github.com/arch3rPro/Pentest-Docker/archive/refs/heads/master.zip",
+				"platform": "casaos"
 			}
-		}
+		},
+		"platforms": ["casaos"]
 	},
 	"generative-ai-workbench": {
 		"name": "JSDs Generative AI Workbench",
@@ -130,12 +162,31 @@
 		"repository": "https://github.com/justserdar/ZimaOS-AppStore",
 		"categories": ["ai"],
 		"summary": "An AI workbench for digital artisans and creative studios.",
-		"description": "The Foundry Workbench brings together applications, tools, and ready-to-use solutions for digital artisans and studios to concept, design, develop, create, and publish digital projects. Despite the ZimaOS repository name, the original listing describes support for CasaOS when suitable GPUs are available.",
+		"description": "The Foundry Workbench brings together generative AI applications and tools for digital artisans and studios. Upstream develops these apps on ZimaOS and declares CasaOS compatibility. This listing records the CasaOS ZIP source; a native ZimaOS JSON manifest has not been verified. A suitable GPU and application-specific setup may be required.",
 		"sources": {
 			"default": {
 				"label": "App store source",
-				"url": "https://github.com/justserdar/ZimaOS-AppStore/archive/refs/tags/latest-v0.0.8.zip"
+				"url": "https://github.com/justserdar/ZimaOS-AppStore/archive/refs/tags/latest-v0.0.8.zip",
+				"platform": "casaos"
 			}
-		}
+		},
+		"platforms": ["casaos"]
+	},
+	"lintuxer": {
+		"name": "Lintuxer Apps",
+		"mark": "LX",
+		"maintainer": "Lintuxer",
+		"repository": "https://github.com/chicohaager/zima-appstore",
+		"categories": ["general"],
+		"summary": "Community apps for ZimaOS with documented verification notes.",
+		"description": "A community app store for ZimaOS, published as a native v2 JSON source and listed in the ZimaOS documentation. The maintainer documents per-app checks, including tested versions and setup notes. Review each application's notes for its device and configuration requirements.",
+		"sources": {
+			"zimaos": {
+				"label": "App store source",
+				"url": "https://chicohaager.github.io/zima-appstore/store.json",
+				"platform": "zimaos"
+			}
+		},
+		"platforms": ["zimaos"]
 	}
 }
