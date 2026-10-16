@@ -2,7 +2,7 @@
 	"name": "awesome-casaos",
 	"version": "3.0.0",
 	"private": true,
-	"description": "A bilingual, statically generated directory of community CasaOS app stores.",
+	"description": "A bilingual community resource directory for ZimaOS and CasaOS, with ZimaOS as the recommended starting point.",
 	"license": "MIT",
 	"repository": "https://github.com/IceWhaleTech/Awesome-CasaOS",
 	"type": "module",

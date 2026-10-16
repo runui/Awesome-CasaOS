@@ -1,8 +1,8 @@
-The quickest way to create your own app store is to fork an existing one, remove the apps you don’t need, and add your own. You can start with any project in the [community collection](/).
+Create a community app store for ZimaOS and CasaOS by forking an existing store, removing the apps you don’t need, and adding your own. We recommend starting with ZimaOS. Choose a project from the [community collection](/) as your starting point.
 
 ## Before you begin
 
-You should be comfortable forking repositories and pushing commits on GitHub. In this guide, we’ll start with the official CasaOS AppStore.
+You should be comfortable forking repositories and pushing commits on GitHub. This guide uses the official CasaOS AppStore as an example of a store’s repository structure. Test the system versions and architectures you plan to support, and document the results in your store.
 
 ## 01 — Fork an app store
 
@@ -24,15 +24,17 @@ You should be comfortable forking repositories and pushing commits on GitHub. In
 
 Follow the repository’s `CONTRIBUTING.md` to add an app to the `Apps` folder. Use an existing app as a template, then commit and push your changes.
 
-## 04 — Try it on CasaOS
+## 04 — Test on ZimaOS and CasaOS
+
+Start with our recommended platform, ZimaOS. If your store also targets CasaOS, test it separately on a CasaOS device. Document the system versions and architectures you have tested.
 
 1. Return to your repository on GitHub.
 2. Open the **Code** menu.
 3. Copy the link for **Download ZIP**.
-4. Open the App Store in CasaOS and select **+ Add Source**.
-5. Paste the URL and select **Add +**.
+4. Open the App Store on the ZimaOS or CasaOS device you are testing and find its source settings.
+5. Paste the ZIP URL and confirm the new source.
 6. Wait for your app to appear in the store.
 
 ## Share it with the community
 
-If your store adds something useful to the CasaOS community and you’re committed to maintaining it, [submit a pull request](https://github.com/IceWhaleTech/Awesome-CasaOS) to be considered for the collection. See the [contribution guide](https://github.com/IceWhaleTech/Awesome-CasaOS/blob/main/CONTRIBUTING.md) for the required information.
+If your store adds something useful to the ZimaOS and CasaOS community and you’re committed to maintaining it, [submit a pull request](https://github.com/IceWhaleTech/Awesome-CasaOS) to be considered for the collection. See the [contribution guide](https://github.com/IceWhaleTech/Awesome-CasaOS/blob/main/CONTRIBUTING.md) for the required information.

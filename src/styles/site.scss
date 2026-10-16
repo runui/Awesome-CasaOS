@@ -12,6 +12,7 @@
 	--input: #d2d2d7;
 	--ring: #0071e3;
 	--radius: 0.875rem;
+	--brand-duration: 20s;
 	--font-sans: 'SF Pro Display', 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Segoe UI', 'PingFang SC', 'Noto Sans SC', sans-serif;
 	font-family: var(--font-sans);
 	color: var(--foreground);
@@ -192,6 +193,238 @@ button:disabled {
 .brand-light {
 	font-weight: 400;
 }
+
+// Both brands reserve the same grid cell, so the swap never shifts the navigation.
+// The unanimated styles are the final state, including when reduced motion disables keyframes.
+.brand--animated {
+	--brand-gap: 10px;
+	flex-shrink: 0;
+}
+.brand-sequence {
+	position: relative;
+	display: inline-grid;
+	animation: brand-jitter var(--brand-duration) steps(1, end) infinite;
+}
+.brand-sequence::after {
+	content: '';
+	position: absolute;
+	inset: -2px -8px;
+	opacity: 0;
+	background: repeating-linear-gradient(0deg, transparent 0 3px, #fff 3px 4px);
+	pointer-events: none;
+	animation: brand-scan var(--brand-duration) steps(1, end) infinite;
+}
+.brand-phase {
+	position: relative;
+	grid-area: 1 / 1;
+}
+.brand-phase--casaos {
+	opacity: 0;
+	visibility: hidden;
+	animation: brand-depart var(--brand-duration) steps(1, end) infinite;
+}
+.brand-phase--zimaos {
+	animation: brand-arrive var(--brand-duration) steps(1, end) infinite;
+}
+.brand-face {
+	display: flex;
+	align-items: center;
+	gap: var(--brand-gap);
+	line-height: 1.3;
+}
+.brand-sequence--hero {
+	width: 100%;
+}
+.brand-sequence--hero .brand-face {
+	flex-direction: column;
+	gap: 0;
+}
+.brand-face--cyan,
+.brand-face--red {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+.brand-face--cyan {
+	color: #00a9d6;
+	filter: drop-shadow(-3px 0 #00d9ff);
+	animation: brand-slice-cyan var(--brand-duration) steps(1, end) infinite;
+}
+.brand-face--red {
+	color: #f02d65;
+	filter: drop-shadow(3px 0 #ff3268);
+	animation: brand-slice-red var(--brand-duration) steps(1, end) infinite;
+}
+
+// On this 20-second timeline ZimaOS rests from 16% to 91%, giving it 15 clear seconds.
+// The two 1.2-second glitch bursts surround the swaps at 13% and 94%.
+// Every layer shares one clock so neither the text nor the artwork drifts over repeated cycles.
+@keyframes brand-depart {
+	0%,
+	94%,
+	100% {
+		opacity: 1;
+		visibility: visible;
+	}
+	13% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+@keyframes brand-arrive {
+	0%,
+	94%,
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+	13% {
+		opacity: 1;
+		visibility: visible;
+	}
+}
+@keyframes brand-jitter {
+	0%,
+	10%,
+	11.5%,
+	14.5%,
+	16%,
+	91%,
+	92.5%,
+	95.5%,
+	97%,
+	100% {
+		transform: none;
+		filter: none;
+	}
+	10.5%,
+	13.5%,
+	91.5%,
+	94.5% {
+		transform: translate(-4px, 1px) skewX(-7deg);
+		filter: drop-shadow(-2px 0 #00d9ff99) drop-shadow(2px 0 #ff326899);
+	}
+	11.25%,
+	14.25%,
+	92.25%,
+	95.25% {
+		transform: translate(4px, -1px) skewX(6deg);
+		filter: drop-shadow(2px 0 #00d9ff99) drop-shadow(-2px 0 #ff326899);
+	}
+	12.5%,
+	93.5% {
+		transform: translate(-6px, 0) skewX(-10deg) scaleX(1.03);
+		filter: drop-shadow(-3px 0 #00d9ffbb) drop-shadow(3px 0 #ff3268bb);
+	}
+	15%,
+	96% {
+		transform: translateX(-2px);
+		filter: none;
+	}
+}
+@keyframes brand-slice-cyan {
+	0%,
+	10%,
+	11.5%,
+	14.5%,
+	16%,
+	91%,
+	92.5%,
+	95.5%,
+	97%,
+	100% {
+		opacity: 0;
+	}
+	10.25%,
+	12.25%,
+	13.75%,
+	91.25%,
+	93.25%,
+	94.75% {
+		opacity: 1;
+		clip-path: inset(8% 0 60% 0);
+		transform: translateX(-9px);
+	}
+	11%,
+	13%,
+	15%,
+	92%,
+	94%,
+	96% {
+		opacity: 0.9;
+		clip-path: inset(48% 0 12% 0);
+		transform: translateX(7px);
+	}
+}
+@keyframes brand-slice-red {
+	0%,
+	10.25%,
+	12%,
+	14.75%,
+	16%,
+	91.25%,
+	93%,
+	95.75%,
+	97%,
+	100% {
+		opacity: 0;
+	}
+	10.5%,
+	12.5%,
+	14%,
+	91.5%,
+	93.5%,
+	95% {
+		opacity: 1;
+		clip-path: inset(60% 0 4% 0);
+		transform: translateX(10px);
+	}
+	11.25%,
+	13.25%,
+	15.25%,
+	92.25%,
+	94.25%,
+	96.25% {
+		opacity: 0.9;
+		clip-path: inset(24% 0 42% 0);
+		transform: translateX(-7px);
+	}
+}
+@keyframes brand-scan {
+	0%,
+	10%,
+	11.5%,
+	14.5%,
+	16%,
+	91%,
+	92.5%,
+	95.5%,
+	97%,
+	100% {
+		opacity: 0;
+	}
+	10.5%,
+	12.5%,
+	14%,
+	91.5%,
+	93.5%,
+	95% {
+		opacity: 0.8;
+		clip-path: inset(0 0 48% 0);
+		transform: translateX(4px);
+	}
+	11.25%,
+	13.25%,
+	15.25%,
+	92.25%,
+	94.25%,
+	96.25% {
+		opacity: 0.65;
+		clip-path: inset(46% 0 0 0);
+		transform: translateX(-4px);
+	}
+}
 .main-nav {
 	display: flex;
 	align-items: center;
@@ -219,7 +452,7 @@ button:disabled {
 }
 .language-link,
 .github-link,
-.casaos-link {
+.platform-link {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -242,10 +475,10 @@ button:disabled {
 	width: 18px;
 	height: 18px;
 }
-.casaos-link {
+.platform-link {
 	gap: 6px;
 }
-.casaos-link .icon {
+.platform-link .icon {
 	width: 11px;
 	height: 11px;
 }
@@ -365,7 +598,7 @@ button:disabled {
 	object-fit: contain;
 	margin-bottom: 10px;
 }
-.art-center > span {
+.art-center .brand-art-name {
 	font-size: 26px;
 	letter-spacing: -1px;
 	font-weight: 650;
@@ -1720,7 +1953,7 @@ html[lang='zh-CN'] .hero-description {
 	.main-nav {
 		gap: 24px;
 	}
-	.casaos-link,
+	.platform-link,
 	.header-divider {
 		display: none;
 	}
@@ -1816,6 +2049,9 @@ html[lang='zh-CN'] .hero-description {
 		width: 27px;
 		height: 27px;
 	}
+	.brand--animated {
+		--brand-gap: 8px;
+	}
 	.header-actions {
 		gap: 18px;
 	}
@@ -1907,7 +2143,7 @@ html[lang='zh-CN'] .hero-description {
 		height: 48px;
 		margin-bottom: 8px;
 	}
-	.art-center > span {
+	.art-center .brand-art-name {
 		font-size: 21px;
 	}
 	.art-center small {

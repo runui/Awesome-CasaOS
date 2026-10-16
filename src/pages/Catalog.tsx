@@ -8,6 +8,7 @@ import { filterStores, parseQuery, serializeQuery, type CatalogQuery } from '../
 import { localePath } from '../lib/paths';
 import { usePage } from '../lib/page';
 import { Icon } from '../components/Icon';
+import { BrandArtwork } from '../components/Brand';
 import { StoreCard } from '../components/StoreCard';
 import { CommunityNote, Contribution } from '../components/Community';
 
@@ -51,9 +52,7 @@ function Hero() {
 						<span>Imagine</span>
 					</div>
 					<div class="art-center">
-						<img src={href('/logo.png')} alt="" />
-						<span>CasaOS</span>
-						<small>{t('madeFor')}</small>
+						<BrandArtwork hero />
 					</div>
 					<div class="art-tile tile-ha">
 						<Icon name="home" />
@@ -250,7 +249,7 @@ export function Catalog() {
 									<div class="sidebar-note">
 										<Icon name="spark" />
 										<p>{t('footerDescription')}</p>
-										<span>CasaOS Community ↗</span>
+										<span>{t('communityName')} ↗</span>
 									</div>
 								</div>
 							</CollapsibleContent>

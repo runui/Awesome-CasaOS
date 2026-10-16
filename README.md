@@ -1,6 +1,8 @@
-# Awesome CasaOS
+# Awesome ZimaOS
 
-A community directory of third-party CasaOS app stores, built with **Vite, SolidJS, TypeScript, [TileUI Solid](https://solid.tileui.zmorg.cn/docs), and i18next**. English and Chinese pages are pre-rendered to standalone HTML. Search, category filters, language preferences, and copying source URLs run in the browser.
+A community resource directory for **ZimaOS and CasaOS**, with **ZimaOS as the recommended starting point**. Browse third-party app stores and find source URLs for your personal cloud. Individual projects document their own platform, version, and architecture requirements.
+
+Built with **Vite, SolidJS, TypeScript, [TileUI Solid](https://solid.tileui.zmorg.cn/docs), and i18next**. English and Chinese pages are pre-rendered to standalone HTML. Search, category filters, language preferences, and copying source URLs run in the browser.
 
 ## Development
 

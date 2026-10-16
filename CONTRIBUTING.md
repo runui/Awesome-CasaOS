@@ -1,6 +1,6 @@
-# Contributing to Awesome CasaOS
+# Contributing to Awesome ZimaOS
 
-Have a useful CasaOS app store you’re committed to maintaining? Submit a pull request for consideration. Improvements to translations and tutorials are welcome too.
+Have a useful app store for ZimaOS or CasaOS that you’re committed to maintaining? Submit a pull request for consideration. This directory gathers resources for **ZimaOS and CasaOS**, with **ZimaOS as the recommended starting point**. Improvements to translations and tutorials are welcome too.
 
 ## Add or update a store
 
@@ -8,7 +8,7 @@ Edit `data/stores.json`, the only maintained base store list. Use a stable lower
 
 Include the store’s name and short `mark`, maintainer, HTTPS GitHub repository URL, at least one existing category ID, and English `summary` and `description`. Add translated fields under the same slug in `data/stores.zh.json`. Keep summaries brief and descriptions factual; avoid unsupported claims about availability, security, or compatibility.
 
-The `sources` object uses stable source IDs as keys, each containing an English `label` and the exact HTTPS ZIP `url` accepted by CasaOS. Translate only the label in the locale override; do not repeat the URL. Keep architecture-specific variants separate and clearly labeled. Do not infer architecture support from a repository name.
+The `sources` object uses stable source IDs as keys, each containing an English `label` and the exact HTTPS ZIP `url` accepted by the target platform’s App Store. State which ZimaOS and CasaOS versions and device architectures you have tested in the store’s description or documentation. Translate only the label in the locale override; do not repeat the URL. Keep architecture-specific variants separate and clearly labeled. Do not infer platform or architecture support from a repository name.
 
 Store slugs are public URLs. Avoid changing them; a necessary change should include static transition routes for the old links. Logos are optional: the directory creates a consistent text cover from `mark`.
 

@@ -21,8 +21,8 @@ test('route translators are ready synchronously and keep their language across i
 	const zh = getTranslator('zh');
 	expect(zh('copy')).toBe('复制地址');
 	expect(en('copy')).toBe('Copy URL');
-	expect(getTranslator('zh')('directoryTitle')).toBe('社区应用商店');
-	expect(en('directoryTitle')).toBe('Community app stores');
+	expect(getTranslator('zh')('directoryTitle')).toBe('ZimaOS 和 CasaOS 应用商店');
+	expect(en('directoryTitle')).toBe('ZimaOS and CasaOS app stores');
 	expect(zh('copy')).toBe('复制地址');
 });
 
@@ -39,10 +39,10 @@ test('SEO renders translated titles and descriptions without waiting for browser
 	const zh = pageHead(resolveRoute('/zh/'), '/');
 	const en = pageHead(resolveRoute('/'), '/');
 	const guide = pageHead(resolveRoute('/zh/guides/create-app-store/'), '/');
-	expect(zh).toContain('<title>社区应用商店 · Awesome CasaOS</title>');
-	expect(zh).toContain('发现 CasaOS 第三方应用商店。');
-	expect(en).toContain('<title>Community app stores · Awesome CasaOS</title>');
-	expect(en).toContain('Discover third-party CasaOS app stores.');
-	expect(guide).toContain('<title>创建你的第一个应用商店 · Awesome CasaOS</title>');
+	expect(zh).toContain('<title>ZimaOS 和 CasaOS 应用商店 · Awesome ZimaOS</title>');
+	expect(zh).toContain('探索 ZimaOS 和 CasaOS 的社区应用商店。');
+	expect(en).toContain('<title>ZimaOS and CasaOS app stores · Awesome ZimaOS</title>');
+	expect(en).toContain('Explore community app stores for ZimaOS and CasaOS.');
+	expect(guide).toContain('<title>创建你的第一个应用商店 · Awesome ZimaOS</title>');
 	expect(pageHead(resolveRoute('/zh/'), '/')).toBe(zh);
 });

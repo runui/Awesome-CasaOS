@@ -19,7 +19,7 @@ export function normalizeSiteUrl(value: string | undefined): string | undefined 
 export function pageHead(route: Route, base: string, site?: string): string {
 	const t = getTranslator(route.locale);
 	const store = route.kind === 'store' ? catalogs[route.locale].stores.find((store) => store.slug === route.slug) : undefined;
-	const title = `${store?.name ?? (route.kind === 'guide' ? t('guideTitle') : route.kind === 'not-found' ? '404' : t('directoryTitle'))} · Awesome CasaOS`;
+	const title = `${store?.name ?? (route.kind === 'guide' ? t('guideTitle') : route.kind === 'not-found' ? '404' : t('directoryTitle'))} · ${t('siteName')}`;
 	const description = store?.summary ?? (route.kind === 'guide' ? t('guideDescription') : t('directoryMeta'));
 	const indexable = ['catalog', 'store', 'guide'].includes(route.kind);
 	// Prefixed default-language aliases share the canonical URL of the unprefixed page.
@@ -28,7 +28,7 @@ export function pageHead(route: Route, base: string, site?: string): string {
 		`<title>${escapeHtml(title)}</title>`,
 		`<meta name="description" content="${escapeHtml(description)}">`,
 		`<meta name="robots" content="${indexable ? 'index,follow' : 'noindex,follow'}">`,
-		`<meta property="og:site_name" content="Awesome CasaOS">`,
+		`<meta property="og:site_name" content="${escapeHtml(t('siteName'))}">`,
 		`<meta property="og:type" content="website">`,
 		`<meta property="og:title" content="${escapeHtml(title)}">`,
 		`<meta property="og:description" content="${escapeHtml(description)}">`,

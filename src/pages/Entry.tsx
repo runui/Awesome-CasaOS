@@ -14,7 +14,7 @@ export function LegacyRedirect() {
 	});
 	return (
 		<section class="entrance container">
-			<p class="eyebrow">AWESOME CASAOS</p>
+			<p class="eyebrow">{t('siteName')}</p>
 			<h1>{t('oldPage')}</h1>
 			<p>{t('entranceDescription')}</p>
 			<div class="entrance-links">
@@ -35,7 +35,7 @@ export function NotFound() {
 	const { t, href, locale } = usePage();
 	return (
 		<section class="entrance container">
-			<p class="eyebrow">404 / AWESOME CASAOS</p>
+			<p class="eyebrow">404 / {t('siteName')}</p>
 			<h1>{t('notFoundTitle')}</h1>
 			<p>{t('notFoundDescription')}</p>
 			<a class="primary-link" href={href(localePath(locale))}>
