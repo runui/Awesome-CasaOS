@@ -1,17 +1,45 @@
 {
-  "name": "vuepress-theme-reco-demo",
-  "version": "2.0.0",
-  "description": "Demo for vuepress-theme-reco@2.x.",
-  "repository": "git@github.com:recoluan/vuepress-theme-reco-demo.git",
-  "author": "reco_luan <recoluan@outlook.com>",
-  "license": "MIT",
-  "scripts": {
-    "dev": "vuepress dev .",
-    "start": "vuepress dev .",
-    "build": "vuepress build ."
-  },
-  "dependencies": {
-    "vuepress": "2.0.0-beta.63",
-    "vuepress-theme-reco": "2.0.0-beta.66"
-  }
+	"name": "awesome-casaos",
+	"version": "3.0.0",
+	"private": true,
+	"description": "A bilingual, statically generated directory of community CasaOS app stores.",
+	"license": "MIT",
+	"repository": "https://github.com/IceWhaleTech/Awesome-CasaOS",
+	"type": "module",
+	"scripts": {
+		"dev": "npm run content:build && vite",
+		"ui:add": "npx --yes shadcn@4.21.5 add",
+		"format": "oxfmt --config .oxfmtrc.json --write .",
+		"format:check": "oxfmt --config .oxfmtrc.json --check .",
+		"lint": "oxlint --config .oxlintrc.json --deny-warnings .",
+		"lint:fix": "oxlint --config .oxlintrc.json --deny-warnings --fix .",
+		"check": "npm run content:build && tsc --noEmit && tsx scripts/validate.ts",
+		"test": "npm run content:build && vitest run",
+		"test:browser": "playwright test",
+		"build": "npm run check && vite build && vite build --ssr src/entry-server.tsx && tsx scripts/prerender.ts",
+		"preview": "vite preview",
+		"content:build": "tsx scripts/compile-content.ts"
+	},
+	"dependencies": {
+		"i18next": "^26.4.7",
+		"markdown-it": "^14.1.0",
+		"solid-js": "^1.9.17",
+		"zod": "^4.0.0"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.56.0",
+		"@types/markdown-it": "^14.1.2",
+		"@types/node": "^24.0.0",
+		"oxfmt": "^0.73.0",
+		"oxlint": "^1.88.0",
+		"sass": "^1.93.0",
+		"tsx": "^4.20.0",
+		"typescript": "^5.9.0",
+		"vite": "^8.3.4",
+		"vite-plugin-solid": "^2.11.14",
+		"vitest": "^5.0.5"
+	},
+	"engines": {
+		"node": ">=22.12.0"
+	}
 }

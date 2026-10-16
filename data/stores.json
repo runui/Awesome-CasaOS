@@ -1,0 +1,141 @@
+{
+	"linuxserver": {
+		"name": "CasaOS-LinuxServer-AppStore",
+		"mark": "LS",
+		"maintainer": "WisdomSky",
+		"repository": "https://github.com/WisdomSky/CasaOS-LinuxServer-AppStore",
+		"categories": ["general"],
+		"summary": "A home for LinuxServer.io images, ready for your CasaOS.",
+		"description": "A custom CasaOS app store described by its contributor as containing over 100 LinuxServer.io images. Explore a broad collection of applications for your personal cloud.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://casaos-appstore.paodayag.dev/linuxserver.zip"
+			}
+		}
+	},
+	"appstore-play": {
+		"name": "CasaOS-AppStore-Play",
+		"mark": "PL",
+		"maintainer": "Cp0204",
+		"repository": "https://github.com/Cp0204/CasaOS-AppStore-Play",
+		"categories": ["china"],
+		"summary": "Local Chinese favorites, with a dedicated ARMv7 source.",
+		"description": "A not-so-serious app store focused on local Chinese applications, including Thunder, Qinglong, and VerySync. Applications use the :latest tag. A separate source is available for Raspberry Pi 2, OneCloud, and other ARMv7 devices.",
+		"sources": {
+			"default": {
+				"label": "Standard source",
+				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play.zip"
+			},
+			"armv7": {
+				"label": "ARMv7 · Raspberry Pi 2 / OneCloud",
+				"url": "https://play.cuse.eu.org/Cp0204-AppStore-Play-arm.zip"
+			}
+		}
+	},
+	"coolstore": {
+		"name": "CasaOS-Coolstore",
+		"mark": "CS",
+		"maintainer": "WisdomSky",
+		"repository": "https://github.com/WisdomSky/CasaOS-Coolstore",
+		"categories": ["general"],
+		"summary": "A fresh collection of cool apps for your personal cloud.",
+		"description": "Another community-built CasaOS app store, bringing together a collection of cool applications to explore on your device.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://casaos-appstore.paodayag.dev/coolstore.zip"
+			}
+		}
+	},
+	"edge": {
+		"name": "CasaOS (Edge) AppStore",
+		"mark": "ED",
+		"maintainer": "WisdomSky",
+		"repository": "https://github.com/WisdomSky/CasaOS-AppStore-Edge",
+		"categories": ["general"],
+		"summary": "A community fork of the official store with updated versions.",
+		"description": "A fork of the official CasaOS app store that offers updated application versions. This community project is maintained independently of the official store.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://paodayag.dev/casaos-appstore-edge.zip"
+			}
+		}
+	},
+	"home-automation": {
+		"name": "CasaOS HomeAutomation AppStore",
+		"mark": "HA",
+		"maintainer": "mr-manuel",
+		"repository": "https://github.com/mr-manuel/CasaOS-HomeAutomation-AppStore",
+		"categories": ["automation"],
+		"summary": "Useful tools for a more connected home, and a little more.",
+		"description": "A CasaOS app store containing useful applications for home automation and other tasks. Bring more of your connected home tools together on your own device.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/mr-manuel/CasaOS-HomeAutomation-AppStore/archive/refs/tags/latest.zip"
+			}
+		}
+	},
+	"big-bear": {
+		"name": "Big Bear CasaOS App Store",
+		"mark": "BB",
+		"maintainer": "BigBearTechWorld & BigBearCommunity",
+		"repository": "https://github.com/bigbeartechworld/big-bear-casaos",
+		"categories": ["general"],
+		"summary": "A community app collection from Big Bear and friends.",
+		"description": "The Big Bear CasaOS App Store is maintained by BigBearTechWorld and the BigBearCommunity. It is a community app store and is not maintained by the CasaOS team.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/bigbeartechworld/big-bear-casaos/archive/refs/heads/master.zip"
+			}
+		}
+	},
+	"tmc": {
+		"name": "TMC Community App Store",
+		"mark": "TM",
+		"maintainer": "mariosemes & TMC community",
+		"repository": "https://github.com/mariosemes/CasaOS-TMCstore",
+		"categories": ["general"],
+		"summary": "A community-driven collection, open to your contributions.",
+		"description": "An independent, community-driven app store curated by TMC (mariosemes), open to contributions from anyone. Explore the applications brought together by its community.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/mariosemes/CasaOS-TMCstore/archive/refs/heads/main.zip"
+			}
+		}
+	},
+	"pentest-docker": {
+		"name": "CasaOS Pentest-Docker AppStore",
+		"mark": ">_",
+		"maintainer": "arch3rPro",
+		"repository": "https://github.com/arch3rPro/Pentest-Docker",
+		"categories": ["security"],
+		"summary": "A dedicated collection of penetration testing tools.",
+		"description": "Pentest-Docker is a third-party CasaOS app store containing penetration testing tool applications.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/arch3rPro/Pentest-Docker/archive/refs/heads/master.zip"
+			}
+		}
+	},
+	"generative-ai-workbench": {
+		"name": "JSDs Generative AI Workbench",
+		"mark": "AI",
+		"maintainer": "justserdar",
+		"repository": "https://github.com/justserdar/ZimaOS-AppStore",
+		"categories": ["ai"],
+		"summary": "An AI workbench for digital artisans and creative studios.",
+		"description": "The Foundry Workbench brings together applications, tools, and ready-to-use solutions for digital artisans and studios to concept, design, develop, create, and publish digital projects. Despite the ZimaOS repository name, the original listing describes support for CasaOS when suitable GPUs are available.",
+		"sources": {
+			"default": {
+				"label": "App store source",
+				"url": "https://github.com/justserdar/ZimaOS-AppStore/archive/refs/tags/latest-v0.0.8.zip"
+			}
+		}
+	}
+}

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://ui.shadcn.com/schema.json",
+	"style": "new-york",
+	"rsc": false,
+	"tsx": true,
+	"tailwind": {
+		"config": "",
+		"css": "src/styles/registry.css",
+		"baseColor": "neutral",
+		"cssVariables": true,
+		"prefix": ""
+	},
+	"aliases": {
+		"components": "@/components",
+		"ui": "@/components/ui",
+		"utils": "@/components/ui/lib/utils",
+		"lib": "@/lib",
+		"hooks": "@/lib"
+	},
+	"registries": {
+		"@tile-ui": "https://solid.tileui.zmorg.cn/r/{name}.json"
+	}
+}

@@ -1,0 +1,86 @@
+{
+	"linuxserver": {
+		"summary": "把 LinuxServer.io 镜像带到你的 CasaOS。",
+		"description": "一个为 CasaOS 打造的自定义应用商店。原收录介绍包含超过 100 个 LinuxServer.io 镜像，为你的个人云提供丰富的应用选择。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"appstore-play": {
+		"summary": "收录常用国内应用，并提供 ARMv7 设备专用源。",
+		"description": "一个「不太正经」的 CasaOS 应用商店，主要收录迅雷、青龙、微力同步等国内应用，使用 :latest 标签。另有适用于树莓派 2、玩客云及其他 ARMv7 设备的专用源。",
+		"sources": {
+			"default": {
+				"label": "普通源"
+			},
+			"armv7": {
+				"label": "ARMv7 专用 · 树莓派 2 / 玩客云"
+			}
+		}
+	},
+	"coolstore": {
+		"summary": "为你的个人云，带来一些「酷」应用。",
+		"description": "一个由社区打造的 CasaOS 第三方应用商店，汇集各类「酷」应用，供你在设备上探索。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"edge": {
+		"summary": "基于官方应用商店的社区分支，提供更新版本。",
+		"description": "从 CasaOS 官方应用商店 Fork 而来的社区项目，提供更新的应用版本，由社区独立维护。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"home-automation": {
+		"summary": "为家庭自动化收集实用工具，也不止于此。",
+		"description": "一个包含家庭自动化及其他实用应用的 CasaOS 商店，将更多智能家居工具集中到你自己的设备中。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"big-bear": {
+		"summary": "来自 Big Bear 与社区伙伴的应用集合。",
+		"description": "Big Bear CasaOS 应用商店由 BigBearTechWorld 和 BigBearCommunity 共同维护，是独立于 CasaOS 团队的社区应用商店。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"tmc": {
+		"summary": "由 TMC 社区共同维护，欢迎每一份贡献。",
+		"description": "由 TMC（mariosemes）整理和维护的独立社区应用商店，向所有人开放贡献。来探索社区汇集的各类应用。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"pentest-docker": {
+		"summary": "面向渗透测试工具的专门集合。",
+		"description": "Pentest-Docker 是一个收录渗透测试工具应用的 CasaOS 第三方应用商店。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	},
+	"generative-ai-workbench": {
+		"summary": "为数字创作者与工作室准备的生成式 AI 工作台。",
+		"description": "Foundry Workbench 为数字创作者与工作室汇集应用、工具和即用方案，服务于构思、设计、开发、创作与发布。虽然仓库名带有 ZimaOS，原收录说明指出，在配备合适 GPU 的情况下也可用于 CasaOS。",
+		"sources": {
+			"default": {
+				"label": "应用商店源"
+			}
+		}
+	}
+}

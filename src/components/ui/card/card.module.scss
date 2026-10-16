@@ -1,0 +1,66 @@
+@use '../../../styles/variables/colors' as *;
+
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: $spacing-4;
+	border-radius: $radius-lg;
+	border: 1px solid $border;
+	background-color: $background;
+	color: $foreground;
+	box-shadow: $shadow;
+	overflow: hidden;
+	transition: box-shadow $transition-normal;
+
+	&:hover {
+		box-shadow: $shadow-md;
+	}
+}
+
+.cardHeader {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-auto-rows: min-content;
+	align-items: start;
+	gap: $spacing-1;
+	padding: $spacing-6 $spacing-6 0;
+
+	// 存在操作区时启用右侧列
+	&:has(.cardAction) {
+		grid-template-columns: 1fr auto;
+	}
+}
+
+.cardTitle {
+	font-size: $text-xl;
+	font-weight: $font-semibold;
+	line-height: $leading-tight;
+	color: $foreground;
+	margin: 0;
+}
+
+.cardDescription {
+	font-size: $text-sm;
+	color: $muted-foreground;
+	line-height: $leading-normal;
+	margin: 0;
+}
+
+.cardAction {
+	grid-column-start: 2;
+	grid-row-start: 1;
+	grid-row-end: span 2;
+	align-self: start;
+	justify-self: end;
+}
+
+.cardContent {
+	padding: 0 $spacing-6;
+}
+
+.cardFooter {
+	display: flex;
+	align-items: center;
+	gap: $spacing-4;
+	padding: 0 $spacing-6 $spacing-6;
+}
